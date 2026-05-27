@@ -8,11 +8,11 @@
 
             <!-- Links -->
             <div class="d-flex justify-content-center gap-3 mb-2">
-                <a href="index.html" class="footer-link">Home</a>
-                <a href="sobre_nos.html" class="footer-link">Sobre</a>
-                <a href="receitas.html" class="footer-link">Receitas</a>
-                <a href="videos.html" class="footer-link">Tutoriais</a>
-                <a href="contactos.html" class="footer-link">Contacto</a>
+                <a href="index.php" class="footer-link">Home</a>
+                <a href="sobre_nos.php" class="footer-link">Sobre</a>
+                <a href="receitas.php" class="footer-link">Receitas</a>
+                <a href="videos.php" class="footer-link">Tutoriais</a>
+                <a href="contactos.php" class="footer-link">Contacto</a>
             </div>
 
             <!-- Redes Sociais -->

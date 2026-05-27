@@ -4,7 +4,7 @@
     <header class="text-center">
 
             <!-- Logo -->
-            <a href="index.html">
+            <a href="index.php">
                 <img class="img-fluid" style="max-width: 160px;" src="../Assets/Imagens/Icones/logo_simpa.png"
                     alt="Simpa Baker logo">
             </a>

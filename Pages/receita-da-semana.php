@@ -1,7 +1,11 @@
+<?php
+// Define o titulo da pagina e identifica qual link do menu deve ficar ativo
+$tituloPagina = "Receita da Semana";
+$paginaAtual = "receita_semana";
+?>
+
 <?php include 'content/head.php';?>
-
 <?php include 'content/header.php';?>
-
 <?php include 'content/nav.php';?>
 
     <main>
