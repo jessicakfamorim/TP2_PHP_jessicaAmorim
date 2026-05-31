@@ -1,3 +1,7 @@
+<?php 
+require_once '../Config/database.php';
+?>
+
 <?php
 // Define o titulo da pagina e identifica qual link do menu deve ficar ativo
 $tituloPagina = "Simpa Baker";
