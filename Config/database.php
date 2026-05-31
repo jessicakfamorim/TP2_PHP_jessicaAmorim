@@ -5,10 +5,18 @@ $user = "root";
 $password = "Jeka.121826";
 $database = "simpa_baker";
 
-$ligacao = mysqli_connect($host, $user, $password, $database);
+try {
+    // Cria a ligação entre o PHP e a base de dados
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$database;charset=utf8mb4",
+        $user,
+        $password
+    );
 
-if (!$ligacao) {
-    die("Erro na ligação à base de dados: " . mysqli_connect_error());
+    // Faz com que os erros da base de dados gerem exceções
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+
+    // Interrompe o programa se não for possível ligar à base de dados
+    die("Erro na ligação à base de dados: " . $e->getMessage());
 }
-
-?>

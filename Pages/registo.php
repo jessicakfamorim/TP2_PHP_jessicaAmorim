@@ -22,30 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Prepara o comando SQL para inserir um novo utilizador
         // Os pontos de interrogação são espaços reservados para receber os dados
         $sql = "INSERT INTO utilizadores (nome, email, password) VALUES (?, ?, ?)";
+        try {
+            // Prepara o comando SQL antes de enviar os valores para a base de dados
+            $stmt = $pdo->prepare($sql);
 
-        // Prepara o comando antes de enviar os valores para a base de dados
-        $stmt = mysqli_prepare($ligacao, $sql);
-
-        // Associa os valores recebidos às interrogações (?) do comando SQL preparado.
-        // Os valores são associados pela mesma ordem em que aparecem no INSERT:
-        // 1.º ? recebe $nome, 2.º ? recebe $email e 3.º ? recebe $passwordHash.
-        // "sss" indica que os três valores enviados são strings, ou seja, textos.
-        // Esta abordagem ajuda a evitar ataques de SQL Injection.
-        mysqli_stmt_bind_param($stmt, "sss", $nome, $email, $passwordHash);
-
-        // Executa o comando SQL e insere o utilizador na base de dados
-        if (mysqli_stmt_execute($stmt)) {
+            // Executa o comando SQL e associa os valores às interrogações pela mesma ordem
+            $stmt->execute([$nome, $email, $passwordHash]);
 
             // Mostra uma mensagem se o registo for inserido corretamente
             echo "Utilizador registado com sucesso.";
-        } else {
+        } catch (PDOException $e) {
 
-            // O erro 1062 indica que foi inserido um valor duplicado 
-            // numa coluna definida como UNIQUE, neste caso, o email
-            if (mysqli_stmt_errno($stmt) == 1062) {
+            // O código 23000 indica uma violação de integridade da base de dados.
+            // Neste caso, ocorre quando tentamos inserir um email já registado.
+            if ($e->getCode() == 23000) {
                 echo "Este email já está registado.";
             } else {
-                // Mostra uma mensagem genérica para outros erros
                 echo "Erro ao registar utilizador.";
             }
         }
