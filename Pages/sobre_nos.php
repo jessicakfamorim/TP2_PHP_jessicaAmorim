@@ -15,7 +15,7 @@ $paginaAtual = "sobre";
                 <h1>O meu livro de receitas <em>especiais</em></h1>
                 <p>Este é o meu cantinho doce, onde guardo e partilho receitas que fazem parte da minha história, aquelas que marcaram momentos especiais e que continuam a trazer conforto em cada preparo.</p>
                 <p>Simples, prático e sempre disponível.</p>
-                <a href="receitas.html" class="btn btn-simpa" style="margin-top:1rem;">Ver Receitas</a>
+                <a href="receitas.php" class="btn btn-simpa" style="margin-top:1rem;">Ver Receitas</a>
             </div>
             <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Baker" />
         </section>
