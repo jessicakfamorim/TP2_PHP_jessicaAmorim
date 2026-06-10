@@ -1,4 +1,5 @@
 <?php
+
 // Define o titulo da pagina e identifica qual link do menu deve ficar ativo
 $tituloPagina = "Receitas";
 $paginaAtual = "receitas";
@@ -8,6 +9,8 @@ $paginaAtual = "receitas";
 // Importa o ficheiro database.php
 // Esse ficheiro cria a ligação entre o PHP e a base de dados MySQL
 require '../Config/database.php';
+// Inicia a sessão
+session_start();
 // Guarda numa variável o comando SQL que queremos executar
 // Neste caso estamos a pedir todas as receitas da tabela receitas
 $sql = "SELECT * FROM receitas";
@@ -18,8 +21,8 @@ $stmt = $pdo->query($sql);
 // Cada receita será guardada num array associativo
 $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-?>
 
+?>
 <?php include 'content/head.php';?>
 <?php include 'content/header.php';?>
 <?php include 'content/nav.php';?>
@@ -40,11 +43,13 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <input type="text" id="pesquisaReceita" placeholder="Pesquisar por bolo, cookies, brigadeiro..."
                 class="form-control mb-4">
 
-            <div class="d-flex justify-content-end mb-4">
-                <a href="nova-receita.php" class="btn-simpa">Adicionar Receita</a>
-            </div>
-
-                
+            <!-- Só mostra o botao Adicionar Receita se o utilizador estiver logado. -->
+            <?php if (isset($_SESSION['utilizador_id'])): ?>
+                <div class="d-flex justify-content-end mb-4">
+                    <a href="nova-receita.php" class="btn-simpa">Adicionar Receita</a>
+                </div>
+            <?php endif; ?>
+              
 
             <!-- Lista de receitas -->
                 <!-- Cards -->
@@ -70,12 +75,14 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <p class="card-text">
                                     <?= htmlspecialchars($receita['origem']) ?>
                                 </p>
-                                <p><?= $receita['imagem'] ?></p>
 
-                                <a href="ver-receita.php?id=<?= $receita['id'] ?>" class="btn-simpa">Ver receita</a>               
-                                <a href="editar-receita.php?id=<?= $receita['id'] ?>" class="btn-simpa">Editar</a>
-                                <a href="eliminar-receita.php?id=<?= $receita['id'] ?>"class="btn-simpa">Eliminar</a>
-
+                                <div class="d-flex gap-2 flex-wrap">
+                                        <a href="ver-receita.php?id=<?= $receita['id'] ?>" class="btn-simpa">Ver receita</a>    
+                                    <?php if (isset($_SESSION['utilizador_id'])): ?>           
+                                        <a href="editar-receita.php?id=<?= $receita['id'] ?>" class="btn-simpa">Editar</a>
+                                        <a href="eliminar-receita.php?id=<?= $receita['id'] ?>"class="btn-simpa" onclick="return confirm('Tem a certeza que deseja eliminar esta receita?')">Eliminar</a>
+                                    <?php endif; ?>
+                                </div>
                             </div>
 
                         </div>

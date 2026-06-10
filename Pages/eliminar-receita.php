@@ -1,5 +1,17 @@
 <?php
 
+// Inicia a sessão
+session_start();
+
+// Verifica se o utilizador fez login
+if (!isset($_SESSION['utilizador_id'])) {
+
+    // Se não fez login,
+    // não pode aceder a esta página. Volta para a página de login
+    header('Location: login.php');
+    exit;
+}
+
 // Importa a ligação à base de dados
 require '../Config/database.php';
 

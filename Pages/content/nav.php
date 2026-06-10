@@ -1,3 +1,10 @@
+            <?php
+            // Se a sessão não foi iniciada: session_start, se ja foi, não faz nada.
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+                }
+            ?>
+            
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-lg" data-bs-theme="light">
                 <div class="container">
@@ -46,13 +53,24 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link <?php if (isset($paginaAtual) && $paginaAtual == "registo") echo "active"; ?>"
-                                    href="registo.php">Registar</a>
-                            </li>
 
+                                <?php if (isset($_SESSION['utilizador_id'])): ?>
+                                        <li class="nav-item">
+                                            <span class="nav-link">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="logout.php" class="btn-simpa">Logout</a>
+                                        </li>
+                                    <?php else: ?>
+                                        <li class="nav-item">
+                                            <a href="login.php" class="btn-simpa">Login</a>
+                                        </li>
+                                <?php endif; ?>
+
+                            </li>                       
                         </ul>
                     </div>
-
                 </div>
             </nav>
             </header>
