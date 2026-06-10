@@ -12,8 +12,12 @@ require '../Config/database.php';
 // Inicia a sessão
 session_start();
 // Guarda numa variável o comando SQL que queremos executar
-// Neste caso estamos a pedir todas as receitas da tabela receitas
-$sql = "SELECT * FROM receitas";
+// Utilizamos o INNER JOIN para relacionar a tabela receitas com a tabela categoria. 
+// A tabela receitas guarda apenas o categoria_id, mas através do JOIN conseguimos obter e apresentar o nome da categoria correspondente.
+$sql = "SELECT receitas.*, categoria.nome AS categoria
+        FROM receitas
+        INNER JOIN categoria
+        ON receitas.categoria_id = categoria.id";
 // Executa o comando SQL na base de dados
 // O resultado fica guardado na variável $stmt
 $stmt = $pdo->query($sql);
@@ -74,6 +78,9 @@ $receitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                 <p class="card-text">
                                     <?= htmlspecialchars($receita['origem']) ?>
+                                </p>
+                                <p class="card-text">Categoria:
+                                    <?= htmlspecialchars($receita['categoria']) ?>
                                 </p>
 
                                 <div class="d-flex gap-2 flex-wrap">
