@@ -74,12 +74,12 @@ $paginaAtual = "sobre";
                 <div class="membro">
                     <img src="../Assets/Imagens/Equipa/jessica.jpg" alt="Jessica" />
                     <h3>Jessica Amorim</h3>
-                    <span>Chef de Cozinha, Fundadora</span>
+                    <span>Fundadora</span>
                 </div>
                 <div class="membro">
-                    <img src="../Assets/Imagens/Equipa/Luana.jpg" alt="Luana" />
-                    <h3>Luana Valerio</h3>
-                    <span>Criadora de Conteúdo, Fundadora</span>
+                    <img src="../Assets/Imagens/Equipa/cleiton.jpeg" alt="Cleiton" />
+                    <h3>Cleiton Domazak</h3>
+                    <span>Desgustador</span>
                 </div>
             </div>
         </section>

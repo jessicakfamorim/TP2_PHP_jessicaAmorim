@@ -17,10 +17,25 @@ $tipoMensagem = "";
 // Só processa os dados se o formulário foi submetido com o método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Trim remove espaços desnecessários antes e depois do nome e do email
-    $nome = trim($_POST['nome']);
-    $email = trim($_POST['email']);
-
+    // Guarda o nome enviado pelo formulário
+    $nome = $_POST['nome'];
+        // Verifica se o nome foi preenchido
+        if (empty(trim($nome))) {
+            die('O nome é obrigatório.');
+        }
+    // Guarda o email enviado pelo formulário
+    $email = $_POST['email'];
+        // Verifica se o email tem um formato válido
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            die('Email inválido.');
+        }
+    // Guarda a password enviada pelo formulário    
     $passwordUtilizador = $_POST['password'];
+        // Verifica se a password tem pelo menos 6 caracteres
+        if (strlen($passwordUtilizador) < 6) {
+            die('A password deve ter pelo menos 6 caracteres.');
+        }
+    // Guarda a confirmação da password    
     $confirmarPassword = $_POST['confirmar_password'];
 
     // Verifica no servidor se os campos obrigatórios foram preenchidos

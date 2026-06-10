@@ -18,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $titulo = $_POST['titulo'];
+        if (empty(trim($titulo))) {
+
+            die('O título é obrigatório.');
+        }
     $ingredientes = $_POST['ingredientes'];
     $modo_preparo = $_POST['modo_preparo'];
     $tempo_preparo = $_POST['tempo_preparo'];

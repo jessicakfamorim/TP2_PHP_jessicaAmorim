@@ -20,7 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vai buscar o id da receita na URL
     $id = $_GET['id'];
+    
+// Busca a receita atual para obter a imagem guardada
+$stmtImagem = $pdo->prepare(
+    "SELECT imagem FROM receitas WHERE id = :id"
+);
 
+$stmtImagem->execute([
+    'id' => $id
+]);
+
+$receitaAtual = $stmtImagem->fetch(PDO::FETCH_ASSOC);
     // Guarda os dados enviados pelo formulário
     $titulo = $_POST['titulo'];
     $ingredientes = $_POST['ingredientes'];
@@ -28,19 +38,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tempo_preparo = $_POST['tempo_preparo'];
     $rendimento = $_POST['rendimento'];
     $origem = $_POST['origem'];
+    $imagem = $receitaAtual['imagem'];
+        // Se o utilizador escolheu uma nova imagem
+        if (!empty($_FILES['imagem']['name'])) {
+            $imagem = $_FILES['imagem']['name'];
+            $pastaDestino = __DIR__ . "/../Assets/Imagens/Receitas/";
+            move_uploaded_file(
+                $_FILES['imagem']['tmp_name'],
+                $pastaDestino . $imagem
+            );
+        }
     $categoria_id = $_POST['categoria_id'];
 
     // Comando SQL para atualizar a receita
     // Apenas a receita com o id recebido será alterada
     $sql = "UPDATE receitas
             SET
-                titulo = :titulo,
-                ingredientes = :ingredientes,
-                modo_preparo = :modo_preparo,
-                tempo_preparo = :tempo_preparo,
-                rendimento = :rendimento,
-                origem = :origem,
-                categoria_id = :categoria_id
+            titulo = :titulo,
+            ingredientes = :ingredientes,
+            modo_preparo = :modo_preparo,
+            tempo_preparo = :tempo_preparo,
+            rendimento = :rendimento,
+            origem = :origem,
+            imagem = :imagem,
+            categoria_id = :categoria_id
             WHERE id = :id";
 
     // Prepara o comando SQL
@@ -53,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'tempo_preparo' => $tempo_preparo,
         'rendimento' => $rendimento,
         'origem' => $origem,
+        'imagem' => $imagem,
         'categoria_id' => $categoria_id,
         'id' => $id
     ]);
@@ -66,6 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Vai buscar o id que veio na URL
 $id = $_GET['id'];
+
+
 
 // Procurar apenas a receita com o id recebido
 $sql = "SELECT * FROM receitas WHERE id = :id";
